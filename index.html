@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI calculator</title>
+    <!-- link for fevicon icon -->
+    <link href="images.jpg" rel="icon" type="image/jpeg">
+    <style>
+        body {
+            background: #f4f7fc; /* Soft background color */
+            font-family: 'Arial', sans-serif; /* Clean and modern font */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            width: 350px;
+            padding: 30px;
+            margin: 20px auto;
+            font-size: 1rem;
+        }
+
+        label {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4e9af1;
+            outline: none;
+        }
+
+        button {
+            background: #4e9af1;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #3577e5;
+        }
+
+        .msg {
+            color: #333;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        #category {
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        #alert {
+            color: red;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>BMI Calculator</h1>
+
+    <div class="container">
+
+        <label>Enter your height in cm</label>
+        <input id="height" type="number" placeholder="Enter height (cm)">
+
+        <label>Enter your weight in kg</label>
+        <input id="weight" type="number" placeholder="Enter weight">
+
+        <button id="submit" type="submit">calculate</button>
+    </div>
+
+    <h4 class="msg">This is your BMI (Body Mass Index): <span id="result"></span></h4>
+    <h4 class="msg">Your category according to the BMI: <span id="category"></span></h4>
+    <h2 id="alert"></h2>
+
+    <script>
+        
+        let result   = document.querySelector('#result').innerText;  // select element for further opearations
+        const submit = document.querySelector('#submit');           // selecting submit button element for add event listener in it
+     
+    // here i used click event listner in the calculate button which will occur this event if someone click in it .
+    // in which i calculating the height and weight and then printing the msg.
+       submit.addEventListener('click',function(){ 
+
+                                       const weight = document.querySelector('#weight').value;
+                                       const height = document.querySelector('#height').value;
+                                       
+                                       if(isNaN(weight) || isNaN(height) || weight === "" || height === ""){
+
+                               /* if the user enter any empty and string value in the input then the msg line will be disapear and the alert line will displayed */                                                                                                     
+                                        document.querySelectorAll('.msg')[0].style.display = "none"; 
+                                        document.querySelectorAll('.msg')[1].style.display = "none";
+                                        document.querySelector('#alert').style.display = "block";
+                                        document.querySelector('#alert').innerText = "Please enter a valid entry";
+                                        document.querySelector('#alert').style.color = "red";
+
+                                        }
+
+                                       else{  
+                                              document.querySelector('#alert').style.display = "none";
+                                              document.querySelectorAll('.msg')[0].style.display = "block";
+                                              document.querySelectorAll('.msg')[1].style.display = "block";
+                                                    let  result1 =  (weight * 10000) / (height * height);
+                                                    result1 = parseFloat(result1.toFixed(2));
+                                                    document.querySelector('#result').innerText = `${result1}`;
+
+                                                    if (result1 < 18.5){
+                                                    document.querySelector('#category').innerText = "Underweight"; 
+                                                    document.querySelector('#category').style.color = "green"; 
+                                                    }
+                                                    else if (result1 > 18.5 && result1 < 24.9){
+                                                    document.querySelector('#category').innerText = "Normal weight"; 
+                                                    document.querySelector('#category').style.color = "green"; 
+                                                    }
+                                                    else if (result1 > 25.0 && result1 < 29.9){
+                                                    document.querySelector('#category').innerText = "Overweighted"; 
+                                                    document.querySelector('#category').style.color = "Orange"; 
+                                                    }  
+                                                    else if (result1 > 30.0 && result1 < 34.9){
+                                                    document.querySelector('#category').innerText = "Obesity class I (increased risk for developing various health problems.) "; 
+                                                    document.querySelector('#category').style.color = "red"; 
+                                                    }
+                                                    else if (result1 > 35.0 && result1 < 39.9){
+                                                    document.querySelector('#category').innerText = "Obesity class II (higher risk of health problems.)"; 
+                                                    document.querySelector('#category').style.color = "red"; 
+                                                    }
+                                                    else if (result1 => 40.0){
+                                                    document.querySelector('#category').innerText = "Obesity class III (severe obesity, Increased risk of heart disease and stroke)"; 
+                                                    document.querySelector('#category').style.color = "red"; 
+                                                    }
+                                               
+
+
+
+                                       }
+
+                                       });
+       
+                            
+
+    </script>
+</body>
+</html>
+
+
